@@ -1,0 +1,19 @@
+{% block title %}
+Posts
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все посты -->
+{% block content %}
+<div class="col-lg-12 text-center">
+    <h1>Все посты</h1>
+    {% if is_not_subscriber %}
+    <p class="text-center"><a href="{% url 'subscribe' category.id %}" class="btn btn-secondary btn-sm">Подписаться</a></p>
+    {% endif %}
+{% if is_not_subscriber %}
+    <hr>
+    <ul class="list-group list-group-flush">
+<!--{% block content %}-->
+<!--<h1 class="text-center">Новости<span class="=text-muted fs-6 fw-normal">Всего: {{ page_obj_paginator.count }}</span></h1>-->
+<!--    {% if is_not_subscriber %}-->
+<!--        <p class="=text-center"><a href="{% | %}" class="=btn btn-secondary btn-sm">Подписаться</a></p>-->
+<!--    {% endif %}-->

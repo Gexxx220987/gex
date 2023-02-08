@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    {% load static %}
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
+</head>
+<body>
+
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+   <div class="container">
+       <a class="navbar-brand" href="#">Регистрируемся</a>
+       <button class="navbar-toggler" type="button" data-toggle="collapse"
+               data-target="#navbarResponsive"
+               aria-controls="navbarResponsive" aria-expanded="false"
+               aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+       </button>
+       </nav>
+<br>
+<form method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+    <label for="{{ field.id_for_label }}">
+        {{ field.label }}
+        {% if field.field.required %}
+        <span>*</span>
+        {% endif %}
+    </label>
+    <p>{{ field.help_text }}</p>
+    <p> {{ field }}</p>
+    {% endfor %}
+    <p><input type="submit" value="Зарегистрироваться"></p>
+</form>
+</body>
+</html>
