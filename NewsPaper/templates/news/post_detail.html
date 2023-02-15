@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block head_title %}
+Posts
+{% endblock head_title %}
+
+{% block content %}
+    <h1>{{ post.title|censor }}</h1>
+    <p>{{ post.text|censor }}</p>
+    <p>Дата публикации {{ post.date_time_in|date:"d M Y H:i" }}</p>
+
+    {% if request.user.is_authenticated %}
+        <p>
+            Вы можете подписаться на новости категории:
+            {% for category in post.category.all %}
+                {% if not category in user_category %}
+                    <a href="{% url 'subscription' %}?category_id={{ category.id }}"><br>{{ category.name }}</a>
+                {% else %}
+                    <br>{{ category.name }}
+                {% endif %}
+            {% endfor %}
+            <h6>Ваши текущие подписки:</h6>
+            {% for category in user_category %}
+                <br>{{ category.name }}
+            {% endfor %}
+        </p>
+    {% endif %}
+{% endblock content %}

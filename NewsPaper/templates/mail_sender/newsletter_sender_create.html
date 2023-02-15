@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load custom_filters %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Все статьи:</h1>
+    <table>
+        <caption>
+            Всего статей: {{ posts|length }}
+        </caption>
+        <thead>
+        <tr>
+            <th scope="col">Загаловок</th>
+            <th scope="col">Дата публикации</th>
+            <th scope="col">Превью</th>
+        </tr>
+        </thead>
+        <tbody>
+                {% for post in posts %}
+
+                    <tr>
+                        <th scope="row">
+                            <a href="http://127.0.0.1:8000{% url 'post_detail' post.id %}">{{ post.title|censor }}</a>
+                        </th>
+                        <td>{{ post.date_time_in|date:"d M Y" }}</td>
+                        <td>{{ post.text|truncatechars:50|censor }}</td>
+                    </tr>
+                {% endfor %}
+
+        </tbody>
+    </table>
+</body>
+</html>

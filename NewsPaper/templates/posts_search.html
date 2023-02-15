@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block head_title %}
+Posts
+{% endblock head_title %}
+
+{% block content %}
+    <h1>Все статьи:</h1>
+    <form method="GET">
+        {{ filter.form }} <!-- Форму от фильтров за нас сделает Django. А вот кнопку, увы придётся делать самому -->
+        <input type="submit" value="Найти">
+    </form>
+    <table>
+        <caption>
+            Всего статей: {{ filter.qs|length }}
+        </caption>
+        <thead>
+        <tr>
+            <th scope="col">Загаловок</th>
+            <th scope="col">Дата публикации</th>
+            <th scope="col">Превью</th>
+        </tr>
+        </thead>
+        <tbody>
+                {% for post in posts %}
+
+                    <tr>
+                        <th scope="row">
+                            <a href="{% url 'post_detail' post.id %}">{{ post.title|censor }}</a>
+                            <br>
+                            <a href="{% url 'post_update' post.id %}">Редактировать</a>
+                            <a href="{% url 'post_delete' post.id %}">Удалить пост</a>
+                        </th>
+                        <td>{{ post.date_time_in|date:"d M Y" }}</td>
+                        <td>{{ post.text|truncatechars:50|censor }}</td>
+                    </tr>
+                {% endfor %}
+
+        </tbody>
+    </table>
+<a href="{% url 'post_create' %}">Создать статью</a>
+<br>
+{% if is_paginated %}
+
+        {% if page_obj.has_previous %}
+            <a href="?page=1{{ request.get_full_path|is_filters_uses }}">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}{{ request.get_full_path|is_filters_uses }}"><<<</a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a>{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}{{ request.get_full_path|is_filters_uses }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{{ request.get_full_path|is_filters_uses }}">>>></a>
+            <a href="?page={{ page_obj.paginator.num_pages }}{{ request.get_full_path|is_filters_uses }}">Last &raquo;</a>
+        {% endif %}
+
+    {% endif %}
+{% endblock content %}
+
+<!--http://127.0.0.1:8000/posts/?page=2-->

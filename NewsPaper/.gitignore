@@ -1,0 +1,7 @@
+/env
+!/celerybeat-schedule
+!/db.sqlite3
+!/security.log
+!/general.log
+!/errors.log
+.idea

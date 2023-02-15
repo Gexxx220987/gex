@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block head_title %}
+Posts
+{% endblock head_title %}
+
+{% block content %}
+    <h2>Подтвердите удаление</h2>
+    <h3>{{ post.title|censor }}</h3>
+    <p>{{ post.text|censor }}</p>
+    <p>Дата публикации {{ post.date_time_in|date:"d M Y H:i" }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Подтвердить">
+</form>
+{% endblock content %}

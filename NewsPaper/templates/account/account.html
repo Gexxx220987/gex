@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Account - {{ request.user.username }} {% endblock title %}
+
+{% block content %}
+    <h1>Редактирование профиля</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Редактировать">
+</form>
+
+{% if is_not_author %}
+    <button> <a href="/account/upgrade/"> Стать автором</a> </button>
+{% else %}
+    <br>
+    <p>Вы имеете статус Автор</p>
+{% endif %}
+<br>
+<h6>Ваши текущие подписки:</h6>
+{% for category in user_category %}
+{{ category.name }} - <a href="{% url 'unsubscribe' %}?category_id={{ category.id }}">Отписаться<br></a>
+{% endfor %}
+{% endblock content %}
