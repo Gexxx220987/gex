@@ -7,6 +7,8 @@ from .views import (PostsList, PostDetail, SearchPosts,
                     news_redirect,
                     CategoryListView, subscriptions, upgrade_me, subscribe )
 
+from .views import new_add
+from django.contrib import admin
 
 
 app_name='blog'
@@ -24,6 +26,7 @@ urlpatterns = [
     path('articles/<int:pk>/edit/', ArticleUpdate.as_view(), name='article_update'),
     path('articles/<int:pk>/delete/', ArticleDelete.as_view(), name='article_delete'),
     path('subscriptions/', subscriptions, name='subscriptions'),
+    # path('add/', new_add)
     # path('categories/<int:pk>', CategoryListView.as_view(), name='category_list'),
     # path('categories/<int:pk>'/subscribe, subscribe, name='subscribe')
 ]

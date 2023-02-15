@@ -12,6 +12,11 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import Subscription, Category
 from django.contrib.auth.models import Group
+from django.http import HttpResponse
+
+def new_add(request):
+    a = add.delay(4, 5)
+    return HttpResponse (str(a))
 
 
 # @method_decorator(login_required, name='')
@@ -197,3 +202,4 @@ def subscriptions(request):
         'subscriptions.html',
         {'categories': categories_with_subscriptions},
     )
+
